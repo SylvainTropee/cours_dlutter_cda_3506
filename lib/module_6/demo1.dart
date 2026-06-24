@@ -40,6 +40,8 @@ class _FormPageState extends State<FormPage> {
   bool isOk = false;
   String? eat;
 
+  TextEditingController nameController = TextEditingController();
+
   String? validateAge(String? value) {
     if (value == null || value.isEmpty) {
       return "Le champ est obligatoire";
@@ -59,6 +61,7 @@ class _FormPageState extends State<FormPage> {
         child: Column(
           children: [
             TextFormField(
+              controller: nameController,
               onSaved: (value) {
                 name = value;
               },
@@ -95,7 +98,7 @@ class _FormPageState extends State<FormPage> {
                 ice = value;
               },
               onChanged: (value) {
-                print(value);
+               nameController.text = value!;
               },
               initialValue: "",
               items: [
