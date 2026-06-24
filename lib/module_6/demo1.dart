@@ -36,6 +36,19 @@ class FormPage extends StatefulWidget {
 
 class _FormPageState extends State<FormPage> {
   GlobalKey<FormState> _key = GlobalKey<FormState>();
+  String? name, age, ice;
+  bool isOk = false;
+  String? eat;
+
+  String? validateAge(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Le champ est obligatoire";
+    }
+    if (int.parse(value) < 18) {
+      return "Mineur interdit !";
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +59,18 @@ class _FormPageState extends State<FormPage> {
         child: Column(
           children: [
             TextFormField(
+              onSaved: (value) {
+                name = value;
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Le champ est obligatoire";
+                }
+                if (value.length < 3) {
+                  return "Minimun 3 caractères";
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 labelText: "Nom",
                 hintText: "Veuillez saisir votre nom...",
@@ -54,6 +79,10 @@ class _FormPageState extends State<FormPage> {
             ),
             SizedBox(height: 16),
             TextFormField(
+              onSaved: (value) {
+                age = value;
+              },
+              validator: validateAge,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Age",
@@ -62,6 +91,9 @@ class _FormPageState extends State<FormPage> {
               ),
             ),
             DropdownButtonFormField<String>(
+              onSaved: (value) {
+                ice = value;
+              },
               onChanged: (value) {
                 print(value);
               },
@@ -85,13 +117,21 @@ class _FormPageState extends State<FormPage> {
             ),
             Row(
               children: [
-                Checkbox(value: true, onChanged: (value) {}),
+                Checkbox(value: isOk, onChanged: (value) {
+                  setState(() {
+                    isOk = value!;
+                  });
+                }),
                 Text("La <Form> ?"),
               ],
             ),
             RadioGroup(
-              groupValue: "eat",
-              onChanged: (value){},
+              groupValue: eat,
+              onChanged: (value) {
+                setState(() {
+                  eat = value;
+                });
+              },
               child: Column(
                 children: [
                   RadioListTile(value: "takeaway", title: Text("A emporter")),
@@ -99,7 +139,16 @@ class _FormPageState extends State<FormPage> {
                 ],
               ),
             ),
-            OutlinedButton(onPressed: (){}, child: Text("Save"))
+            OutlinedButton(
+              onPressed: () {
+                if (_key.currentState!.validate()) {
+                  print("$age - $name - $ice - $isOk");
+                  _key.currentState!.save();
+                  print("$age - $name - $ice - $isOk");
+                }
+              },
+              child: Text("Save"),
+            ),
           ],
         ),
       ),
