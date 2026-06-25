@@ -35,7 +35,7 @@ class FormPage extends StatefulWidget {
 }
 
 class _FormPageState extends State<FormPage> {
-  GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
   String? name, age, ice;
   bool isOk = false;
   String? eat;
@@ -103,18 +103,18 @@ class _FormPageState extends State<FormPage> {
               initialValue: "",
               items: [
                 DropdownMenuItem(
-                  child: Text("Choisir une glace"),
                   value: "",
                   enabled: false,
+                  child: Text("Choisir une glace"),
                 ),
                 DropdownMenuItem(
-                  child: Text("Snickers glacé"),
                   value: "snicker",
+                  child: Text("Snickers glacé"),
                 ),
-                DropdownMenuItem(child: Text("Vienneta"), value: "vienneta"),
+                DropdownMenuItem(value: "vienneta", child: Text("Vienneta")),
                 DropdownMenuItem(
-                  child: Text("Haggen daz - Macadamia"),
                   value: "haggen",
+                  child: Text("Haggen daz - Macadamia"),
                 ),
               ],
             ),

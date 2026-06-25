@@ -76,8 +76,9 @@ class _ArticleItemState extends State<ArticleItem> {
 
   void _decrement(){
     setState(() {
-      if(quantity > 0)
-          quantity--;
+      if(quantity > 0) {
+        quantity--;
+      }
         widget.updateTotal(-widget.price);
     });
   }
